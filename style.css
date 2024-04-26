@@ -1,0 +1,176 @@
+/*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
+html, body, p, ol, ul, li, dl, dt, dd, blockquote, figure, fieldset, legend, textarea, pre, iframe, hr, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+button, input, select {
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+img, video {
+  height: auto;
+  max-width: 100%;
+}
+
+iframe {
+  border: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td, th {
+  padding: 0;
+}
+
+html, body {
+  font-size: 14px;
+}
+
+body {
+  padding: 20px;
+  background: #9f9e9e;
+  font-family: sans-serif;
+}
+
+.table {
+  width: 100%;
+}
+.table td {
+  border: 1px solid #ccc;
+}
+.table .thead {
+  background: #000;
+  color: #fff;
+}
+.table .thead th {
+  background: #000;
+}
+
+.btn, .card-action, .btn-danger, .card-cancel {
+  padding: 0.3571428571em 0.8571428571em;
+  border-radius: 3px;
+}
+
+.btn, .card-action, .btn-danger, .card-cancel {
+  text-decoration: none;
+  background: rgb(100, 100, 100);
+  color: #fff;
+}
+.btn:hover, .card-action:hover, .btn-danger:hover, .card-cancel:hover {
+  background: #7e7e7e;
+}
+
+.big {
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.btn-danger, .card-cancel {
+  background: rgb(243, 33, 33);
+}
+.btn-danger:hover, .card-cancel:hover {
+  background: #890909;
+}
+
+.card {
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 3px;
+  position: relative;
+  background: #fff;
+}
+.card::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 15px solid #FF0000;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  position: absolute;
+  bottom: -15px;
+  left: calc(50% - 15px);
+}
+
+.card-actions {
+  display: flex;
+}
+
+.m-1 {
+  margin: 0 1rem;
+}
+
+.m-2 {
+  margin: 0 2rem;
+}
+
+.m-3 {
+  margin: 0 3rem;
+}
+
+.m-4 {
+  margin: 0 4rem;
+}
+
+.icon-bear {
+  background: url(img/bear.png);
+}
+
+.icon-lion {
+  background: url(img/lion.png);
+}
+
+.icon-camel {
+  background: url(img/camel.png);
+}
+
+.porte {
+  background: green;
+  color: #fff;
+}
+
+.fenetre {
+  background: rgb(194, 194, 1);
+  color: #fff;
+}
+
+.cheminee {
+  background: violet;
+  color: #000;
+}
+
+@media only screen and (max-width: 768px) {
+  .card-actions {
+    display: block;
+  }
+  .btn, .btn-danger, .card-action, .card-cancel {
+    width: 100%;
+  }
+}
+/* Votre commentaire */
+
+/*# sourceMappingURL=style.css.map */

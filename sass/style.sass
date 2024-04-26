@@ -1,0 +1,26 @@
+// le sass permer d'enlever tout ce qui est ponctuation pour le remplacer par de l'indentation
+// pour traduire ce qu'il y a ci-dessous en sass
+// html, body {
+//     font-size: $base-font-size;
+// }
+
+// body {
+//     padding: $padding;
+//     background: #9f9e9e;
+//     font-family: sans-serif;
+// }
+
+// on peut importer les fonctions
+@import "libs/functions.scss"
+@import "libs/mixins.scss"
+
+body
+    background: #000
+    color: #fff
+    // ici on fait appel à la fonction pour la taille de la police
+    font-size: rem(16)
+    // pour les mixins
+    +triangle(#fff)
+
+// pour compiler ce fichier en css
+// ./dart-sass/sass sass/style.sass style.css --watch

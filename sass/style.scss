@@ -1,0 +1,283 @@
+// (functions) on redéfinit la taille de la police par défaut
+$base-font-size: 14px;
+
+@import "libs/reset.scss";
+@import "libs/mixins.scss";
+@import "libs/functions.scss";
+@import "libs/responsive.scss";
+
+// Création de variables
+$primary: rgb(100, 100, 100);
+// ici le padding est en px toutefois si on ne met pas de valeur, si on ajoute une valeur dans un autre padding 
+$padding: 20px;
+
+// (functions)
+html, body {
+    // font-size: 16px;
+    // on passe la variable
+    font-size: $base-font-size;
+}
+
+body {
+    // Ici on ajoute 10px au padding d'origine ce qui fait 30px en CSS
+    // padding: $padding + 10px;
+    padding: $padding;
+    background: #9f9e9e;
+    font-family: sans-serif;
+}
+
+// Exemple d'imbrication
+// Attention de ne pas trop imbriquer pour la lisibiliter du code
+.table {
+    width: 100%;
+
+    td {
+        border: 1px solid #ccc;
+    }
+
+    .thead {
+        background: #000;
+        color: #fff;
+
+        th {
+            background: #000;
+        }
+    }
+
+    // autre exemple de thead
+    // thead {
+    //     background: {
+    //         color: #000;
+    //         repeat: no-repeat;
+    //     }
+    // }
+}
+
+// imbrication pour le bouton
+// On peut regrouper avec le media query
+// mais les media queries ne seront pas regroupés
+// .btn {
+//     background: rgb(99, 122, 255);
+
+//     &:hover {
+//         background: rgb(62, 81, 189);
+//     }
+
+//     .theme-vert & {
+//         background: green;
+//     }
+
+//     @media only screen and (max-width: 1200px) {
+//         padding: 10px;
+//     }
+// }
+
+// Création d'un faux sélecteur qui est précédé de %
+// ce sélecteur ne sera pas compilé donc il n'apparaîtra jamais dans le fichier CSS
+// mais au peut-être utilisé avec un @extend
+%btn {
+    // padding: 5px 12px;
+    // (functions) on veut convertir la taille du bouton en rem
+    // le 16 étant par défaut dans functions.scss on peut ne mettre qu'un param
+    // padding: rem(5) rem(12);
+    // on change le rem en em donc il faut faire le changement dans functions.scss
+    // permet d'avoir un redimensionnement auto en fonction de la taille de la police
+    padding: em(5) em(12);
+    border-radius: 3px;
+}
+
+.btn {
+    @extend %btn;
+    text-decoration: none;
+    background: $primary;
+    // utilisation du if avec sa condition
+    // si 2 > 1 alors on met une couleur noir pour le texte
+    // @if (2 > 1) {
+    //     color: #000;
+    // } @else {
+    //     color: #fff;
+    // }
+    // pour débugger, on peut utiliser debug avec le nom d'une fonction
+    // @debug lightness($primary);
+    // on peut aussi calculer le degré de luminosité d'une couleur
+    // on utilise la fonction lightness et on lui passe un paramètre
+    // couleur comprise entre 0 et 100%
+    @if (lightness($primary) > 50%) {
+        color: #000;
+    } @else {
+        color: #fff;
+    }
+
+    &:hover {
+        // background: rgb(62, 81, 189);
+
+        // utilisation d'une fonction pour que la couleur soit plus foncé au survol du btn
+        // on donne la variable puis on choisit de combien nous souhaitons assombrir par exemple de 10%
+        // assombri par rapport au contraste de la couleur
+        // background: darken($primary, 10);
+
+        // même chose pour éclaicir
+        background: lighten($primary, 10);
+    }
+}
+
+// (functions) on peut voir ici qu'avec le rem, avec la taille d'écriture, le btn n'est pas très beau
+.big {
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+// Comme btn-danger hérite des propriétés de btn, je peux faire les changements directement à btn
+.btn-danger {
+    @extend .btn;
+
+    background: rgb(243, 33, 33);
+    &:hover {
+        background: #890909;
+    }
+}
+
+// Principe d'héritage
+// .call-to-action {
+//     @extend .btn;
+// }
+
+// utilisation de l'extension pour l'ombre afin qu'elle soit cohérente sur tout le site chaque fois que l'on y fera appel
+// ATTENTION!!! Limiter les extensions afin de ne pas surcharger
+%shadow {
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+    @extend %shadow;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    // Les mixins
+    // Ci-dessous on peut voir que l'on répète deux fois le même rotate
+    // -webkit-transform: rotate(10deg);
+    // transform: rotate(10deg);
+    // maintenant on fait appel au mixin
+    // permet dans le style.css de rassembler les propriétés
+    // @include rotate10;
+    // maintenant je peux utiliser ma variable plutôt que rotate10
+    // @include rotate;
+    // ici je peux définir une nouvelle valeur
+    // @include rotate(60deg);
+    // on peut utiliser la mixin $transform avec des paramètres
+    // @include transform(rotate(40deg));
+
+    // on positionne le triangle
+    position: relative;
+    background: #fff;
+    // (mixin) on remplace le ::after ci-dessous par la mixin que l'on a créé
+    // @include triangle;
+    // si on veut on peut modifier la couleur et la taille
+    @include triangle(#FF0000, 15px);
+    // on peut aussi choisir de ne changer qu'un paramètre
+    // cette méthode permet de mieux comprendre ce qui a été modifié
+    // @include triangle($size: 15px);
+}
+
+// (mixin) ici nous allons générer un triangle
+// comme on le voit cela peut faire beaucoup de répétition donc nous allons utiliser les mixins
+// .card::after {
+//     content: '';
+//     width: 0;
+//     height: 0;
+//     border-top: 10px solid #fff;
+//     border-left: 10px solid transparent;
+//     border-right: 10px solid transparent;
+//     position: absolute;
+//     bottom: -10px;
+//     left: calc(50% - 10px);
+// }
+
+.card-action {
+    @extend .btn;
+}
+
+.card-cancel {
+    @extend .btn-danger;
+}
+
+.card-actions {
+    display: flex;
+}
+
+// Convertion d'une variable dans un sélecteur
+// Mettre un # suivi de { comme ci-dessous
+// @media #{$medium-up} {
+//     .btn {
+//         width: 100%;
+//     }
+// }
+
+// boucle for et each
+// ici on se répète pour chaque marge
+// .m-1 {
+//     margin: 0 1rem;
+// }
+
+// .m-2 {
+//     margin: 0 2rem;
+// }
+// donc on va utiliser le système de boucle
+// pour i allant de 1 à 4
+@for $i from 1 through 4 {
+    .m-#{$i} {
+        margin: 0 ($i * 1rem);
+    }
+}
+// (for et each) autre exemple avec des icônes
+// ici aussi il y a répétition
+// donc on va stocker la liste des animaux dans une variable
+// .icon-bear {
+//     background: url(img/bear.png);
+// }
+
+// .icon-lion {
+//     background: url(img/lion.png);
+// }
+// on définit une variable
+$animals: bear, lion, camel;
+@each $animal in $animals {
+    .icon-#{$animal} {
+        background: url(img/#{$animal}.png);
+    }
+}
+// on peut aussi faire un système plus complexe avec des catégories par exemple pour des couleurs associées
+// ici nous avons deux éléments
+// le but est de pouvoir mettre des couleurs dynamiquement
+$categories:
+    porte green,
+    fenetre rgb(194, 194, 1),
+    cheminee violet;
+
+// on utilise la boucle each
+@each $category in $categories {
+    // pour sélectionner uniquement le premier élément à savoir porte, etc sans afficher les couleurs on va utiliser une fonction
+    .#{nth($category, 1)} {
+        // puis on sélectionne le 2e élément à savoir la couleur
+        background: nth($category, 2);
+
+        // on peut ajouter la condition pour les couleurs d'écriture en fonction du background comme réalisé plus haut avec un if
+        @if (lightness(nth($category, 2)) > 50%) {
+            color: #000;
+        } @else {
+            color: #fff;
+        }
+    }
+}
+
+@media #{$medium-down} {
+    .card-actions {
+        display: block;
+    }
+    .btn {
+        width: 100%;
+    }
+}
+
+// Pour les commentaires que l'on veut voir afficher dans le CSS
+/* Votre commentaire */

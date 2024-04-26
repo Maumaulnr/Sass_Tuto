@@ -1,0 +1,32 @@
+// valeur par défault appliquée
+$base-font-size: 16px!default;
+
+// on définit la fonction qui nous permet de retirer l'unité
+/// Remove the unit of a length
+/// @param {Number} $number - Number to remove unit from
+/// @return {Number} - Unitless number
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+      @return $number / ($number * 0 + 1);
+    }
+  
+    @return $number;
+}
+
+// Création de nos propres fonctions
+// par exemple pour les tailles en rem
+// on passe des params
+// permet lors d'un zoom de faire en sorte que la taille du bouton suive
+// pour enlever l'unité d'une valeur pour $base-font-size cf voir strip unit sass
+// permet de ne plus avoir d'erreurs de multiplications à cause d'une unité
+@function rem($size, $base: $base-font-size) {
+    // on divise la taille par $base
+    // puis on fait un return pour avoir le résultat
+    @return 1rem * $size / strip-unit($base);
+}
+
+// ici on change en em
+// le btn évolue bien en fonction de la taille de la police
+@function em($size, $base: $base-font-size) {
+    @return 1em * $size / strip-unit($base);
+}

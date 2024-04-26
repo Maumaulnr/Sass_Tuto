@@ -1,0 +1,48 @@
+// création d'une mixin avec un nom
+// pour l'utiliser, j'y fais appel via style.scss
+// @mixin rotate10 {
+//     -webkit-transform: rotate(10deg);
+//     transform: rotate(10deg);
+// }
+
+// les mixins peuvent recevoir des paramètres
+// création d'une variable avec une valeur par défaut
+// ici c'est une mixin très spécifique
+// @mixin rotate($rotation: 10deg) {
+//     -webkit-transform: rotate($rotation);
+//     transform: rotate($rotation);
+// }
+
+// on peut aussi de choisir d'inclure la mixin transform
+@mixin rotate($rotation: 10deg) {
+    // on lui passe en paramètre la transformation via la variable $rotation
+    // permet d'éviter les répétitions
+    // @include transform(rotate($rotation));
+    // on diminue le nombre de répétition grâce au include dans notre mixins.scss
+    @include rotate(40deg);
+}
+
+// mais on peut avoir une mixin plus générique
+// au lieu de rotate on remplace par $transform
+@mixin transform($transform) {
+    -webkit-transform: $transform;
+    -moz-transform: $transform;
+    transform: $transform;
+}
+
+// création d'une mixin pour le triangle
+// on lui passe des params comme la couleur et la taille
+@mixin triangle($color: #fff, $size: 10px) {
+    &::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-top: $size solid $color;
+        border-left: $size solid transparent;
+        border-right: $size solid transparent;
+        position: absolute;
+        // pour le bottom on met la taille $size que l'on multiplie par -1
+        bottom: $size * -1;
+        left: calc(50% - #{$size});
+    }
+}

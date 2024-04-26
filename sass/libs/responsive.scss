@@ -1,0 +1,14 @@
+// $medium-up: "only screen and (min-width: 768px)";
+
+// Autre exemple où on définit d'abord $medium
+// L'avantage est que la variable est plus facile à modifier
+// Après 768px on peut ajouter 768px!default -> si $medium n'est pas défini au préalable
+// donc si une autre taille est défini dans style.scss alors c'est cette valeur qui prendra le dessus ce qui permet de définir des règles de base
+$medium: 768px!default;
+$large: 1000px!default;
+
+$medium-up: "only screen and (min-width: #{$medium})";
+$medium-down: "only screen and (max-width: #{$medium})";
+
+$large-up: "only screen and (min-width: #{$large})";
+$large-down: "only screen and (max-width: #{$large})";
